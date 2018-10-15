@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Countdown</title>
+    <style>
+        #time {
+            border: 3px solid blue;
+            text-align: center;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+<label for="time"></label>
+<input type="text" id="time" disabled="disabled"/>
+<script>
+  window.onload = function () {
+    countdown(600);
+  };
+
+  function countdown(startTime) {
+    let time = startTime;
+    const box = document.getElementById('time');
+    setInterval(decrement, 1000);
+
+    function decrement() {
+      time--;
+      box.value = Math.trunc(time / 60) + ':' + ('0' + (time % 60)).slice(-2);
+    }
+  }
+</script>
+</body>
+</html>

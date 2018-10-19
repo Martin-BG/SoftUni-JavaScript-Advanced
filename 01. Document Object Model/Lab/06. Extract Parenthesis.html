@@ -6,16 +6,23 @@
 </head>
 <body>
 <p id="content">
-    Rakiya (Bulgarian brandy) is home-made liquor (alcoholic
-    drink). It can be made of grapes, plums or other fruits
-    (even apples).
+    Rakiya (Bulgarian brandy) is home-made liquor (alcoholic drink). It can be made of grapes,
+    plums or other fruits (even apples).
 </p>
+<div id="contentExtracted"></div>
+<button type="button" onclick="postExtractedText('content', 'contentExtracted')">Extract</button>
 <p id="holder">
-    Lorem ipsum dolor sit amet, (consectetur adipiscing elit),
-    sed do eiusmod (tempor) incididunt ut labore (et dolore
-    magna) aliqua.
+    Lorem ipsum dolor sit amet, (consectetur adipiscing elit), sed do eiusmod (tempor) incididunt ut
+    labore (et dolore magna) aliqua.
 </p>
+<div id="holderExtracted"></div>
+<button type="button" onclick="postExtractedText('holder', 'holderExtracted')">Extract</button>
 <script>
+  function postExtractedText(elementId, destination) {
+    const dest = document.getElementById(destination);
+    dest.innerText = extract(elementId);
+  }
+
   function extract(elementId) {
     const text = document.getElementById(elementId).textContent;
     const pattern = /\(([^)]+)\)/g;

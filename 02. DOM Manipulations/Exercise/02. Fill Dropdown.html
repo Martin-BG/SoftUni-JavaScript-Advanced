@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fill Dropdown</title>
+</head>
+<body onload="addItem()">
+<h1>Dropdown Menu</h1>
+<div>
+    <select id="menu"></select>
+</div>
+<label>
+    Text: <input type="text" id="newItemText"/>
+</label>
+<label>
+    Value: <input type="text" id="newItemValue"/>
+</label>
+<input type="button" value="Add" onclick="addItem()">
+
+<script>
+  function addItem() {
+    const textElement = document.getElementById('newItemText');
+    const valueElement = document.getElementById('newItemValue');
+    const option = document.createElement('option');
+    option.value = valueElement.value;
+    option.textContent = textElement.value;
+    textElement.value = '';
+    valueElement.value = '';
+    document.getElementById('menu').appendChild(option);
+  }
+</script>
+</body>
+</html>

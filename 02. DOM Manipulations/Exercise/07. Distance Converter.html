@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Distance Converter</title>
+    <style>
+        label, input {
+            display: inline-block;
+            width: 5em;
+        }
+
+        label {
+            text-align: right;
+        }
+    </style>
+</head>
+<body onload="attachEventsListeners()">
+<h1>Distance Converter</h1>
+<div>
+    <label for="inputDistance">From:</label>
+    <input type="text" id="inputDistance">
+    <select id="inputUnits">
+        <option value="km">Kilometers</option>
+        <option value="m">Meters</option>
+        <option value="cm">Centimeters</option>
+        <option value="mm">Millimeters</option>
+        <option value="mi">Miles</option>
+        <option value="yrd">Yards</option>
+        <option value="ft">Feet</option>
+        <option value="in">Inches</option>
+    </select>
+    <input type="button" id="convert" value="Convert">
+</div>
+<div>
+    <label for="outputDistance">To:</label>
+    <input type="text" id="outputDistance" disabled="disabled">
+    <select id="outputUnits">
+        <option value="km">Kilometers</option>
+        <option value="m">Meters</option>
+        <option value="cm">Centimeters</option>
+        <option value="mm">Millimeters</option>
+        <option value="mi">Miles</option>
+        <option value="yrd">Yards</option>
+        <option value="ft">Feet</option>
+        <option value="in">Inches</option>
+    </select>
+</div>
+<script>
+  function attachEventsListeners() {
+    const inputUnits = document.getElementById('inputUnits');
+    const outputUnits = document.getElementById('outputUnits');
+    const inputDistance = document.getElementById('inputDistance');
+    const outputDistance = document.getElementById('outputDistance');
+
+    const inMeters = {
+      km: 1000,
+      m: 1,
+      cm: 0.01,
+      mm: 0.001,
+      mi: 1609.34,
+      yrd: 0.9144,
+      ft: 0.3048,
+      in: 0.0254,
+    };
+
+    document.getElementById('convert').addEventListener('click', () => {
+      outputDistance.value = +inputDistance.value * inMeters[inputUnits.value] / inMeters[outputUnits.value];
+    });
+  }
+</script>
+</body>
+</html>

@@ -14,38 +14,59 @@
 <script>
   window.onload = function () {
     createBook('#wrapper', 'Alice in Wonderland', 'Lewis Carroll', 1111);
+    createBook('#wrapper', 'AAA', 'BBB', 2222);
+    createBook('#wrapper', 'CCC', 'DDD', 3333);
   };
 
-  function createBook(selector, title, author, isbn) {
-    const getBookId = (function (counter) {
-      return function () {
-        return `book${++counter}`;
-      };
-    })(0);
+  const createBook = (function createBook() {
+    let id = 0;
 
-    const div = $(`<div id="${getBookId()}">`);
-    const selectBtn = $('<button>Select</button>');
-    const deselectBtn = $('<button>Deselect</button>');
+    return (selector, title, author, isbn) => {
+      id++;
+      const div = $(`<div id="book${id}">`);
+      const selectBtn = $('<button>Select</button>');
+      const deselectBtn = $('<button>Deselect</button>');
 
-    selectBtn.on('click', showBorder);
-    deselectBtn.on('click', hideBorder);
+      selectBtn.on('click', () => div.css('border', '2px solid blue'));
+      deselectBtn.on('click', () => div.css('border', ''));
 
-    div
-      .append(`<p class="title">${title}</p>`)
-      .append(`<p class="author">${author}</p>`)
-      .append(`<p class='isbn'>${isbn}</p>`)
-      .append(selectBtn)
-      .append(deselectBtn)
-      .appendTo($(selector));
+      div
+        .append(`<p class="title">${title}</p>`)
+        .append(`<p class="author">${author}</p>`)
+        .append(`<p class='isbn'>${isbn}</p>`)
+        .append(selectBtn)
+        .append(deselectBtn)
+        .appendTo($(selector));
+    };
+  })();
 
-    function showBorder() {
-      $(this).parent().css('border', '2px solid blue');
+  /*
+      // For Judge
+    function createBook(selector, title, author, isbn) {
+      const getBookId = (function () {
+        let counter = 0;
+        return function () {
+          ++counter;
+          return `book${counter}`;
+        };
+      })();
+
+      const div = $(`<div id="${getBookId()}">`);
+      const selectBtn = $('<button>Select</button>');
+      const deselectBtn = $('<button>Deselect</button>');
+
+      selectBtn.on('click', () => div.css('border', '2px solid blue'));
+      deselectBtn.on('click', () => div.css('border', ''));
+
+      div
+        .append(`<p class="title">${title}</p>`)
+        .append(`<p class="author">${author}</p>`)
+        .append(`<p class='isbn'>${isbn}</p>`)
+        .append(selectBtn)
+        .append(deselectBtn)
+        .appendTo($(selector));
     }
-
-    function hideBorder() {
-      $(this).parent().css('border', '');
-    }
-  }
+    */
 </script>
 </body>
 </html>

@@ -14,7 +14,7 @@
 <input id="email" type="text"/>
 <script>
   function validate() {
-    document.querySelector('input').addEventListener('change', isValid);
+    document.querySelector('#email').addEventListener('change', isValid);
     const regex = /^[a-z]+@[a-z]+\.[a-z]+$/;
 
     function isValid() {

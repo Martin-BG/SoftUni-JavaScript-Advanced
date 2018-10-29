@@ -28,3 +28,11 @@ console.log(carFactory({
   carriage: 'hatchback',
   wheelsize: 14
 }));
+
+console.log(carFactory({
+  model: 'Opel Vectra',
+  power: 110,
+  color: 'grey',
+  carriage: 'coupe',
+  wheelsize: 17
+}));

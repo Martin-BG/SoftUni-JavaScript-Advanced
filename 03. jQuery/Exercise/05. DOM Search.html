@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Search</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <style>
+        .add-controls, .search-controls {
+            width: 20em;
+            height: 2em;
+        }
+
+        input {
+            position: absolute;
+            left: 6em;
+        }
+
+        .button {
+            background-color: darkgrey;
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            left: 15em;
+            border: 1px solid black;
+            padding: 0 5px 0 5px;
+        }
+
+        .result-controls .button {
+            position: relative;
+            left: 0;
+            font-size: 50%;
+            margin-right: 1em;
+            padding: 0;
+            bottom: 3px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+<div id="content"></div>
+<script>
+  domSearch('#content', false);
+
+  function domSearch(selector, caseSensitive) {
+    $('<div>')
+      .addClass('add-controls')
+      .append($('<label>')
+        .text('Enter text: ')
+        .append($('<input>')))
+      .append($('<a>')
+        .text('Add')
+        .addClass('button')
+        .css('display', 'inline-block')
+        .click(addNewItem))
+      .appendTo(selector);
+
+    $('<div>')
+      .addClass('search-controls')
+      .append($('<label>')
+        .text('Search: ')
+        .append($('<input>')
+          .change(filterItems)))
+      .appendTo(selector);
+
+    $('<div>')
+      .addClass('result-controls')
+      .append($('<ul>')
+        .addClass('items-list'))
+      .appendTo(selector);
+
+    function filterItems() {
+      let searchedText = $('.search-controls input').val();
+      let text;
+      $('.list-item').each((i, e) => {
+        if (caseSensitive) {
+          text = e.textContent;
+        } else {
+          searchedText = searchedText.toUpperCase();
+          text = e.textContent.toUpperCase();
+        }
+
+        if (text.indexOf(searchedText) === -1) {
+          $(e).css('display', 'none');
+        } else {
+          $(e).css('display', 'block');
+        }
+      });
+    }
+
+    function addNewItem() {
+      const item = $('.add-controls input');
+
+      if (item.val().trim()) {
+        $(`<li>`)
+          .addClass('list-item')
+          .append($('<a>')
+            .addClass('button')
+            .text('X')
+            .css('display', 'inline-block')
+            .click(deleteItem))
+          .append($(`<strong>${item.val().trim()}</strong>`))
+          .appendTo($('.result-controls ul'));
+
+        item.val('');
+      }
+    }
+
+    function deleteItem() {
+      $(this).parent().remove();
+    }
+  }
+</script>
+</body>
+</html>

@@ -21,7 +21,7 @@ function sortedList() {
   };
 }
 
-let sorted = sortedList();
+const sorted = sortedList();
 sorted.add(7);
 sorted.add(-1);
 sorted.add(23);

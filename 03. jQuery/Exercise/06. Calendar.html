@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 0.25em;
+            margin: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        th, td {
+            width: 2.5em;
+        }
+
+        .today {
+            background-color: orange;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+</div>
+<script>
+  window.onload = function () {
+    calendar([15, 1, 2017]);
+  };
+
+  function calendar([day, month, year]) {
+    let date = new Date(`${month},${day},${year}`);
+    const locale = 'en-us';
+    const captionMonth = date.toLocaleString(locale, {month: 'long'});
+
+    $('<table>')
+      .append($('<caption>')
+        .text(`${captionMonth} ${date.getFullYear()}`))
+      .append($('<tbody>')
+        .append($('<tr>')))
+      .appendTo($('#content'));
+
+    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    for (let i = 0; i < weekDays.length; i++) {
+      $('tbody tr').append($('<th>')
+        .text(weekDays[i]));
+    }
+    weekDays.unshift(weekDays.pop());
+
+    date = new Date(`${month},${1},${year}`);
+    while (date.getMonth() === month - 1) {
+      $('table tbody').append($('<tr>'));
+
+      fillUpTable($('tr:last'));
+    }
+
+    function fillUpTable(selector) {
+      for (let i = 0; i < weekDays.length; i++) {
+        let currentDay = weekDays[date.getDay()];
+        let tableHeaderDay = $(`th:eq(${i})`).text();
+
+        if ((currentDay !== tableHeaderDay) || date.getMonth() !== month - 1) {
+          selector.append($('<td>')
+            .text(''));
+        } else {
+          selector.append($('<td>')
+            .text(date.getDate()));
+          if (date.getDate() === day) {
+            $('td:last').addClass('today');
+          }
+          date.setDate(date.getDate() + 1);
+        }
+      }
+    }
+  }
+</script>
+</body>
+</html>

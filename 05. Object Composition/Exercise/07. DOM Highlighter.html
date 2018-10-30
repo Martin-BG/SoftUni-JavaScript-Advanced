@@ -98,8 +98,42 @@
     </div>
     <div id="footer">Copyright</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
 <script>
-  // TODO
+  $(document).ready(function () {
+    colorize('#content');
+  });
+
+  function colorize(selector) {
+    const element = $(selector);
+
+    let bestDepth = -1;
+    let bestSelector;
+
+    findDeepestChild(0, element);
+
+    function findDeepestChild(depth, selector) {
+      if (depth > bestDepth) {
+        bestDepth = depth;
+        bestSelector = selector;
+      }
+
+      const children = selector.children();
+      for (let child of children) {
+        findDeepestChild(depth + 1, $(child));
+      }
+    }
+
+    while (bestSelector) {
+      bestSelector.addClass('highlight');
+      if (bestSelector.attr('id') === element.attr('id')) {
+        break;
+      }
+      bestSelector = bestSelector.parent();
+    }
+  }
 </script>
 </body>
 </html>

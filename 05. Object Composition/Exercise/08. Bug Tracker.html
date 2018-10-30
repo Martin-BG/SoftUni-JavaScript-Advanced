@@ -67,5 +67,86 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function () {
+    const tracker = bugTracker();
+    tracker.output('#content');
+    tracker.report('one', 'one desc', true, 1);
+    tracker.report('two', 'two desc', false, 2);
+    tracker.report('three', 'three desc', true, 3);
+    tracker.setStatus(1, 'Closed');
+  });
+
+  function bugTracker() {
+    return (() => {
+      let container = [];
+      let selector = undefined;
+      let counter = 0;
+
+      const report = function (author, description, reproducible, severity) {
+        container[counter] = {
+          ID: counter,
+          author,
+          description,
+          reproducible,
+          severity,
+          status: 'Open'
+        };
+        counter++;
+
+        draw();
+      };
+
+      const setStatus = function (id, newStatus) {
+        container[id].status = newStatus;
+        draw();
+      };
+
+      const remove = function (id) {
+        container = container.filter(el => el.ID !== id);
+        draw();
+      };
+
+      const sort = function (method) {
+        switch (method) {
+          case 'author':
+            container = container.sort((a, b) => a.author.localeCompare(b.author));
+            break;
+          case 'severity':
+            container = container.sort((a, b) => a.severity - b.severity);
+            break;
+          case 'ID':
+            container = container.sort((a, b) => a.ID - b.ID);
+        }
+
+        draw();
+      };
+
+      const output = function (sel) {
+        selector = sel;
+      };
+
+      const draw = function () {
+        if (selector) {
+          $(selector).html('');
+          for (let bug of container) {
+            $(selector).append($('<div>').attr('id', 'report_' + bug.ID).addClass('report').append($('<div>').addClass('body').append($('<p>').text(bug.description))).append($('<div>').addClass('title').append($('<span>').addClass('author').text('Submitted by: ' + bug.author)).append($('<span>').addClass('status').text(bug.status + ' | ' + bug.severity))));
+          }
+        }
+      };
+
+      return {
+        report,
+        setStatus,
+        remove,
+        sort,
+        output,
+      };
+    })();
+  }
+</script>
 </body>
 </html>

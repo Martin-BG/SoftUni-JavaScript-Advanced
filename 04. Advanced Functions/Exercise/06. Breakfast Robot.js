@@ -22,20 +22,19 @@ let manager = (() => {
         this[ingredient] -= this.meals[meal][ingredient] * quantity;
       }
       return 'Success';
+    },
+    restock: function (ingredient, quantity) {
+      this[ingredient] += quantity;
+      return 'Success';
+    },
+    report: function () {
+      return `protein=${this.protein} carbohydrate=${this.carbohydrate} fat=${this.fat} flavour=${this.flavour}`;
     }
   };
 
   return (input) => {
     const [command, argument, quantity] = input.split(/\s+/g);
-    switch (command) {
-      case 'restock':
-        robot[argument] += +quantity;
-        return 'Success';
-      case 'prepare':
-        return robot.prepare(argument, +quantity);
-      case 'report':
-        return `protein=${robot.protein} carbohydrate=${robot.carbohydrate} fat=${robot.fat} flavour=${robot.flavour}`;
-    }
+    return robot[command](argument, +quantity);
   };
 })();
 

@@ -1,6 +1,6 @@
 function Human(name) { // Hoisted
   this.name = name || 'Pesho';
-  this.walk = function () { // This as it creates a function for every Human object!!! Use Human.prototype.walk = function () {...} instead
+  this.walk = function () { // This creates a function for every Human object!!! Use Human.prototype.walk = function () {...} instead
     console.log(this.name + ' is walking');
   };
 }

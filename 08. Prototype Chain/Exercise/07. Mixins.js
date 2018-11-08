@@ -13,12 +13,12 @@ function mixins() {
     };
   }
 
-  function styleMixin(classtoExtend) {
-    classtoExtend.prototype.isFullSet = function () {
+  function styleMixin(classToExtend) {
+    classToExtend.prototype.isFullSet = function () {
       return this.manufacturer === this.keyboard.manufacturer && this.manufacturer === this.monitor.manufacturer;
     };
 
-    classtoExtend.prototype.isClassy = function () {
+    classToExtend.prototype.isClassy = function () {
       return this.battery.expectedLife >= 3 && (this.color === 'Silver' || this.color === 'Black') && this.weight < 3;
     };
   }

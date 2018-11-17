@@ -3,8 +3,11 @@ class BookCollection {
     this.room = room;
     this.shelfGenre = shelfGenre;
     this.shelfCapacity = +shelfCapacity;
-    this.shelfCondition = +shelfCapacity;
     this.shelf = [];
+  }
+
+  get shelfCondition() {
+    return this.shelfCapacity - this.shelf.length;
   }
 
   get room() {
@@ -15,7 +18,6 @@ class BookCollection {
     if (room !== 'livingRoom' && room !== 'bedRoom' && room !== 'closet') {
       throw new Error(`Cannot have book shelf in ${room}`);
     }
-
     this._room = room;
   }
 
@@ -25,7 +27,6 @@ class BookCollection {
     }
     this.shelf.push({bookName, bookAuthor, genre});
     this.shelf.sort((a, b) => a.bookAuthor.localeCompare(b.bookAuthor));
-    this.shelfCondition = this.shelfCapacity - this.shelf.length;
     return this;
   }
 
@@ -46,7 +47,6 @@ class BookCollection {
     if (this.shelf.length === 0) {
       return 'It\'s an empty shelf';
     }
-
     let result = `"${this.shelfGenre}" shelf in ${this.room} contains:\n`;
     result += this.shelf
       .map(book => `\uD83D\uDCD6 "${book.bookName}" - ${book.bookAuthor}`)
